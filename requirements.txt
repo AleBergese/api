@@ -1,6 +1,7 @@
-fastapi
-uvicorn
+fastapi>=0.115.0
+starlette>=0.37.2
+uvicorn[standard]>=0.30.0
 sqlalchemy
 pymysql
 pydantic
-cryptography 
+cryptography

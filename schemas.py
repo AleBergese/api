@@ -16,6 +16,8 @@ class ClienteCreate(UsuarioBase):
     edad: int
 
 class ProfesionalCreate(UsuarioBase):
+    dni: str
+    edad: int
     especialidad: str
 
 class UsuarioOut(UsuarioBase):
