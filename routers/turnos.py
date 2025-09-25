@@ -14,14 +14,12 @@ def get_db():
     finally:
         db.close()
 @router.get("/", response_model=list[schemas.TurnoOut])
-def listar_turnos_por_profesional(id_profesional: int, db: Session = Depends(get_db)):
-    turnos = db.query(models.Turno).filter(models.Turno.id_profesional == id_profesional).all()
-    return turnos
-
-@router.get("/",response_model=list[schemas.TurnoOut])
-def listar_turnos_por_cliente(id_cliente: int, db: Session = Depends(get_db)):
-    turnos = db.query(models.Turno).filter(models.Turno.id_cliente == id_cliente).all()
-    return turnos
+def listar_turnos(id_profesional: int | None = None, id_cliente: int | None = None, db: Session = Depends(get_db)):
+    if id_profesional:
+        return db.query(models.Turno).filter(models.Turno.id_profesional == id_profesional).all()
+    if id_cliente:
+        return db.query(models.Turno).filter(models.Turno.id_cliente == id_cliente).all()
+    return db.query(models.Turno).all()  # opcional: devolver todos si no se pasa ningún filtro
 
 @router.post("/", response_model=schemas.TurnoOut)
 def crear_turno(turno: schemas.TurnoCreate, db: Session = Depends(get_db)):
